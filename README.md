@@ -1,75 +1,36 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# Mobile Bootcamp: Devtest 02
 
-[travis-image]: https://api.travis-ci.org/nestjs/nest.svg?branch=master
-[travis-url]: https://travis-ci.org/nestjs/nest
-[linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
-[linux-url]: https://travis-ci.org/nestjs/nest
-  
-  <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://img.shields.io/travis/nestjs/nest/master.svg?label=linux" alt="Linux" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#5" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec"><img src="https://img.shields.io/badge/Donate-PayPal-dc3d53.svg"/></a>
-  <a href="https://twitter.com/nestframework"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+All entertainment websites or online stores have millions/billions of items. It becomes challenging for the customer to select the right one. Under this scenario, recommender systems come into the picture and help the user to find the right item by minimizing the options.
 
-## Description
+## Simple Recommender 
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+The Simple Recommender module offers generalized recommendations to every user based on movie popularity and (sometimes) genre. The main idea for the system’s functionality is that movies that are more popular and more critically acclaimed will have a higher probability of being liked by the average audience. Notice, this model does not give personalized recommendations based on the user so that is out of the scope.
 
-## Installation
+The implementation of this model should be basic. All we have to do is sort our movies based on ratings and popularity and display the top movies of our list. As an added step, we can pass in a genre argument to get the top movies of a particular genre.
 
-```bash
-$ npm install
-```
+We will use IMDB's weighted rating formula. Mathematically, it is represented as follows:
 
-## Running the app
+**Weighted Rating (WR)** =  (v/(v + m)  .R) + (m/(v + m)  .C)
 
-```bash
-# development
-$ npm run start
+Where:
+	v is the number of votes of the movie
+	m is the minimum votes required to be listed on the list.
+	R is the average rating of the movie
+	C is the mean vote across the whole report
 
-# watch mode
-$ npm run start:dev
+The next step is to determine an appropriate value from the minimum votes required to be listed in the chart. We will use the 95th percentile as our cutoff. In other words, for a movie to feature in the charts, it must have more votes than at least 95% of the movies on the list.
 
-# production mode
-$ npm run start:prod
-```
 
-## Test
+## Functional Requirements
 
-```bash
-# unit tests
-$ npm run test
+We want to build a tool that helps people to find movies according to popularity and genres from a big dataset, to do this we will need to build the web service with the following requirements:
 
-# e2e tests
-$ npm run test:e2e
+- Recommendations module: Any user that has access to the Rest API URL can query the top list recommendation using movie genres.
+- The service should be able to read a local dataset with thousands of movie records (CSV file).
+- The time for getting recommendations is important, let’s find a way to process the data and cache the results for improving the time query.
 
-# test coverage
-$ npm run test:cov
-```
+![DDD](./assets/domain.png)
 
-## Support
+## Proposed Design
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-  Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+![DevTest02](./assets/MobileDevTest2.png)
