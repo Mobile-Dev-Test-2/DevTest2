@@ -18,13 +18,14 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "copy:metadata": "cp -rv assets/movies_metadata.csv dist/assets/movies_metadata.csv"
+    "copy:metadata": "mkdirp -p dist\\assets && cp -rv assets/movies_metadata.csv dist/assets/movies_metadata.csv"
   },
   "dependencies": {
     "@nestjs/common": "^7.1.1",
     "@nestjs/core": "^7.1.1",
     "@nestjs/platform-express": "^7.1.1",
     "csvjson": "^5.1.0",
+    "mkdirp": "^1.0.4",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.5"
